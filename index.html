@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaultr — Know what your cards are really worth</title>
+  <meta name="description" content="Vaultr is the iOS app that scans your sports cards, shows their real market value, and tells you exactly what to do — sell, grade, hold, or bulk. Built for everyone." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Vaultr — Know what your cards are really worth" />
+  <meta property="og:description" content="Scan any sports card to instantly see its value and get a smart recommendation: sell, grade, hold, or bulk." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Icons (Lucide) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    :root {
+      --purple: #5B5BD6;
+      --purple-dark: #4747B8;
+      --purple-light: #EEEEFB;
+      --purple-glow: rgba(91, 91, 214, 0.25);
+      --ink: #0F1020;
+      --text: #2B2C3B;
+      --muted: #6A6C7E;
+      --line: #ECECF2;
+      --bg: #FFFFFF;
+      --bg-soft: #F7F7FB;
+      --bg-softer: #FBFBFE;
+      --white: #FFFFFF;
+      --shadow-sm: 0 1px 2px rgba(16, 16, 32, 0.04), 0 2px 8px rgba(16, 16, 32, 0.04);
+      --shadow-md: 0 6px 24px rgba(16, 16, 32, 0.07), 0 2px 6px rgba(16, 16, 32, 0.04);
+      --shadow-lg: 0 24px 60px rgba(16, 16, 32, 0.10), 0 8px 20px rgba(16, 16, 32, 0.06);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-lg: 28px;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    h1, h2, h3 {
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--purple);
+      background: var(--purple-light);
+      padding: 7px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow i, .eyebrow [data-lucide] { width: 15px; height: 15px; }
+
+    .section { padding: 96px 0; }
+    .section-head { max-width: 640px; margin: 0 auto 56px; text-align: center; }
+    .section-head h2 { font-size: clamp(28px, 4.2vw, 42px); margin-bottom: 16px; }
+    .section-head p { font-size: 18px; color: var(--muted); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .25s ease, background .2s ease;
+      white-space: nowrap;
+    }
+    .btn i, .btn [data-lucide] { width: 17px; height: 17px; }
+
+    .btn-primary {
+      background: var(--purple);
+      color: #fff;
+      box-shadow: 0 8px 22px var(--purple-glow);
+    }
+    .btn-primary:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: 0 14px 30px var(--purple-glow); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      background: var(--white);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-ghost:hover { border-color: #d9d9e6; transform: translateY(-2px); }
+
+    .btn-lg { padding: 16px 30px; font-size: 16px; }
+
+    /* ---------- Navbar ---------- */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+    }
+    header.nav.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 4px 20px rgba(16,16,32,0.04);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 21px;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--purple), #7C7CF0);
+      display: grid; place-items: center;
+      box-shadow: 0 6px 16px var(--purple-glow);
+    }
+    .logo-mark [data-lucide] { width: 19px; height: 19px; color: #fff; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .nav-links a.link {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .2s ease;
+    }
+    .nav-links a.link:hover { color: var(--ink); }
+
+    .nav-cta { display: flex; align-items: center; gap: 16px; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 6px;
+    }
+    .menu-toggle [data-lucide] { width: 26px; height: 26px; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      padding: 80px 0 90px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -240px; right: -160px;
+      width: 620px; height: 620px;
+      background: radial-gradient(circle, rgba(91,91,214,0.14), transparent 65%);
+      z-index: 0;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -260px; left: -180px;
+      width: 540px; height: 540px;
+      background: radial-gradient(circle, rgba(124,124,240,0.10), transparent 65%);
+      z-index: 0;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-size: clamp(38px, 5.6vw, 62px);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      margin-bottom: 22px;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(120deg, var(--purple), #8A6CF0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p.sub {
+      font-size: 19px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .hero-trust {
+      display: flex; align-items: center; gap: 22px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .hero-trust .tt {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; color: var(--muted); font-weight: 500;
+    }
+    .hero-trust .tt [data-lucide] { width: 17px; height: 17px; color: var(--purple); }
+
+    /* ---------- Phone mockup ---------- */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      perspective: 1400px;
+    }
+    .phone {
+      position: relative;
+      width: 290px;
+      height: 590px;
+      background: #0F1020;
+      border-radius: 44px;
+      padding: 13px;
+      box-shadow: var(--shadow-lg), 0 40px 80px rgba(91,91,214,0.18);
+      transform: rotateY(-9deg) rotateX(3deg);
+      transition: transform .5s ease;
+    }
+    .phone:hover { transform: rotateY(-3deg) rotateX(1deg) translateY(-6px); }
+    .phone::after {
+      content: "";
+      position: absolute;
+      top: 18px; left: 50%;
+      transform: translateX(-50%);
+      width: 96px; height: 24px;
+      background: #0F1020;
+      border-radius: 0 0 16px 16px;
+      z-index: 3;
+    }
+    .phone-screen {
+      width: 100%; height: 100%;
+      background: linear-gradient(180deg, #F7F7FB, #FFFFFF);
+      border-radius: 33px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .app-top {
+      padding: 40px 20px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .app-top .greet { font-size: 12px; color: var(--muted); }
+    .app-top .greet b { display: block; font-size: 16px; color: var(--ink); font-weight: 700; }
+    .app-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), #8A6CF0);
+    }
+    .scan-frame {
+      margin: 6px 20px 16px;
+      flex: 1;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(91,91,214,0.06), rgba(124,124,240,0.04)),
+        #11122A;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    /* The "card" being scanned */
+    .scan-card {
+      width: 132px; height: 186px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, #2A2B55, #3A3B7A);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+      position: relative;
+      overflow: hidden;
+      transform: rotate(-4deg);
+    }
+    .scan-card .pic {
+      height: 116px;
+      background: linear-gradient(135deg, #6C6CE0, #9A7CF0);
+      position: relative;
+    }
+    .scan-card .pic::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 35%, rgba(255,255,255,0.35), transparent 55%);
+    }
+    .scan-card .meta { padding: 9px 10px; }
+    .scan-card .meta .nm { height: 8px; width: 70%; background: rgba(255,255,255,0.85); border-radius: 3px; margin-bottom: 6px; }
+    .scan-card .meta .yr { height: 6px; width: 45%; background: rgba(255,255,255,0.4); border-radius: 3px; }
+    /* scanning corners */
+    .corner { position: absolute; width: 26px; height: 26px; border: 3px solid var(--purple); }
+    .corner.tl { top: 26px; left: 30px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
+    .corner.tr { top: 26px; right: 30px; border-left: none; border-bottom: none; border-radius: 0 6px 0 0; }
+    .corner.bl { bottom: 26px; left: 30px; border-right: none; border-top: none; border-radius: 0 0 0 6px; }
+    .corner.br { bottom: 26px; right: 30px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
+    .scan-line {
+      position: absolute; left: 24px; right: 24px; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      box-shadow: 0 0 14px 3px var(--purple-glow);
+      border-radius: 3px;
+      top: 30px;
+      animation: scanmove 2.6s ease-in-out infinite;
+    }
+    @keyframes scanmove {
+      0%, 100% { top: 32px; }
+      50% { top: calc(100% - 36px); }
+    }
+    .scan-tag {
+      position: absolute; top: 14px; left: 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.14);
+      color: #fff; font-size: 10px; font-weight: 600;
+      padding: 5px 9px; border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+    .scan-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 8px #4ADE80; animation: pulse 1.4s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* result card */
+    .app-result {
+      margin: 0 18px 20px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(16,16,32,0.10);
+      padding: 14px 16px;
+    }
+    .app-result .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .app-result .nm2 { font-size: 13px; font-weight: 700; color: var(--ink); }
+    .app-result .val { font-size: 19px; font-weight: 800; color: var(--ink); }
+    .app-result .yr2 { font-size: 11px; color: var(--muted); }
+    .app-result .trend { font-size: 11px; color: #16A34A; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+    .app-result .rec {
+      margin-top: 10px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--purple-light); color: var(--purple);
+      font-size: 11px; font-weight: 700;
+      padding: 6px 11px; border-radius: 999px;
+    }
+    .app-result .rec [data-lucide] { width: 13px; height: 13px; }
+
+    /* floating chips around phone */
+    .float {
+      position: absolute;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+      padding: 11px 14px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600; color: var(--ink);
+      z-index: 4;
+    }
+    .float .ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; }
+    .float .ic [data-lucide] { width: 16px; height: 16px; color: #fff; }
+    .float small { display: block; font-size: 11px; color: var(--muted); font-weight: 500; }
+    .float.f1 { top: 60px; left: -38px; animation: floaty 4s ease-in-out infinite; }
+    .float.f2 { bottom: 110px; right: -46px; animation: floaty 4.6s ease-in-out infinite 0.6s; }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+    /* ---------- Problem ---------- */
+    .problem { background: var(--bg-soft); }
+    .problem-inner {
+      max-width: 820px; margin: 0 auto; text-align: center;
+    }
+    .problem h2 { font-size: clamp(28px, 4.2vw, 40px); margin-bottom: 22px; }
+    .problem h2 .hl { color: var(--purple); }
+    .problem p { font-size: 19px; color: var(--muted); margin-bottom: 38px; }
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      text-align: left;
+    }
+    .pain {
+      background: #fff; border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .pain [data-lucide] { width: 22px; height: 22px; color: var(--purple); margin-bottom: 12px; }
+    .pain h4 { font-size: 16px; color: var(--ink); font-weight: 700; margin-bottom: 6px; }
+    .pain p { font-size: 14px; margin: 0; }
+
+    /* ---------- Features ---------- */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .feat-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .feat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: transparent; }
+    .feat-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      background: var(--purple-light);
+      display: grid; place-items: center;
+      margin-bottom: 18px;
+    }
+    .feat-icon [data-lucide] { width: 24px; height: 24px; color: var(--purple); }
+    .feat-card h3 { font-size: 19px; margin-bottom: 9px; display: flex; align-items: center; gap: 9px; }
+    .feat-card p { font-size: 15px; color: var(--muted); }
+    .soon-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.03em;
+      color: var(--purple); background: var(--purple-light);
+      padding: 3px 9px; border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    /* ---------- How it works ---------- */
+    .how { background: var(--bg-soft); }
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
+      position: relative;
+    }
+    .step {
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 38px 26px;
+      position: relative;
+    }
+    .step-num {
+      position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--purple); color: #fff;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 15px;
+      box-shadow: 0 6px 16px var(--purple-glow);
+    }
+    .step-icon {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: var(--purple-light);
+      display: grid; place-items: center;
+      margin: 14px auto 20px;
+    }
+    .step-icon [data-lucide] { width: 30px; height: 30px; color: var(--purple); }
+    .step h3 { font-size: 20px; margin-bottom: 10px; }
+    .step p { font-size: 15px; color: var(--muted); }
+
+    /* ---------- Who it's for ---------- */
+    .who-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .who-card {
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      background: linear-gradient(180deg, var(--bg-softer), #fff);
+      border: 1px solid var(--line);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .who-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .who-emoji {
+      width: 54px; height: 54px; border-radius: 15px;
+      background: var(--purple-light);
+      display: grid; place-items: center;
+      margin-bottom: 16px;
+    }
+    .who-emoji [data-lucide] { width: 26px; height: 26px; color: var(--purple); }
+    .who-card h3 { font-size: 17px; margin-bottom: 8px; }
+    .who-card p { font-size: 14px; color: var(--muted); }
+
+    /* ---------- FAQ ---------- */
+    .faq { background: var(--bg-soft); }
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: box-shadow .25s ease, border-color .25s ease;
+    }
+    .faq-item.open { box-shadow: var(--shadow-sm); border-color: #ddddea; }
+    .faq-q {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 24px;
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: 17px; font-weight: 600;
+      color: var(--ink); text-align: left;
+    }
+    .faq-q .chev { transition: transform .3s ease; color: var(--purple); flex-shrink: 0; }
+    .faq-q .chev [data-lucide] { width: 20px; height: 20px; }
+    .faq-item.open .faq-q .chev { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      padding: 0 24px;
+    }
+    .faq-a p { color: var(--muted); font-size: 15.5px; padding-bottom: 22px; }
+    .faq-item.open .faq-a { max-height: 320px; }
+
+    /* ---------- Waitlist CTA ---------- */
+    .cta { padding: 100px 0; }
+    .cta-box {
+      position: relative;
+      background: linear-gradient(135deg, #5B5BD6, #7C5BE0 55%, #8A6CF0);
+      border-radius: var(--radius-lg);
+      padding: 70px 40px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(91,91,214,0.30);
+    }
+    .cta-box::before {
+      content: "";
+      position: absolute; top: -120px; right: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+    }
+    .cta-box::after {
+      content: "";
+      position: absolute; bottom: -140px; left: -60px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+    }
+    .cta-box .eyebrow { background: rgba(255,255,255,0.18); color: #fff; }
+    .cta-box h2 { color: #fff; font-size: clamp(28px, 4.4vw, 44px); margin-bottom: 16px; position: relative; }
+    .cta-box p { color: rgba(255,255,255,0.88); font-size: 18px; max-width: 520px; margin: 0 auto 34px; position: relative; }
+
+    .waitlist-form {
+      display: flex; gap: 12px; justify-content: center;
+      max-width: 480px; margin: 0 auto;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .waitlist-form input {
+      flex: 1;
+      min-width: 220px;
+      font-family: inherit;
+      font-size: 16px;
+      padding: 15px 20px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .waitlist-form input::placeholder { color: #9A9CAD; }
+    .waitlist-form .btn {
+      background: var(--ink);
+      color: #fff;
+    }
+    .waitlist-form .btn:hover { background: #000; transform: translateY(-2px); }
+    .form-note { color: rgba(255,255,255,0.78); font-size: 13.5px; margin-top: 16px; position: relative; }
+
+    .form-success {
+      display: none;
+      align-items: center; justify-content: center; gap: 10px;
+      max-width: 480px; margin: 0 auto;
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: #fff;
+      font-size: 17px; font-weight: 600;
+      padding: 18px 24px;
+      border-radius: 999px;
+      position: relative;
+      animation: popin .4s ease;
+    }
+    .form-success [data-lucide] { width: 22px; height: 22px; }
+    .form-success.show { display: flex; }
+    @keyframes popin { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: var(--ink);
+      color: #B6B7C8;
+      padding: 64px 0 36px;
+    }
+    .footer-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    footer .logo { color: #fff; }
+    .footer-blurb { max-width: 320px; margin-top: 16px; font-size: 14.5px; color: #9092A6; }
+    .app-store-soon {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 18px;
+      font-size: 13px; font-weight: 600; color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 14px; border-radius: 999px;
+    }
+    .app-store-soon [data-lucide] { width: 16px; height: 16px; }
+    .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+    .footer-col h5 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; letter-spacing: 0.02em; }
+    .footer-col a { display: block; font-size: 14.5px; color: #9092A6; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .socials { display: flex; gap: 12px; margin-top: 18px; }
+    .socials a {
+      width: 40px; height: 40px; border-radius: 11px;
+      background: rgba(255,255,255,0.08);
+      display: grid; place-items: center;
+      transition: background .2s, transform .2s;
+    }
+    .socials a:hover { background: var(--purple); transform: translateY(-3px); }
+    .socials a [data-lucide] { width: 18px; height: 18px; color: #fff; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      padding-top: 28px;
+      font-size: 13.5px; color: #76788C;
+    }
+    .footer-bottom a:hover { color: #fff; }
+
+    /* ---------- Scroll reveal ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: .08s; }
+    .reveal.d2 { transition-delay: .16s; }
+    .reveal.d3 { transition-delay: .24s; }
+    .reveal.d4 { transition-delay: .32s; }
+    .reveal.d5 { transition-delay: .40s; }
+
+    /* ---------- Mobile menu panel ---------- */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 24px 24px;
+      z-index: 99;
+      box-shadow: var(--shadow-md);
+    }
+    .mobile-menu.open { display: block; animation: slidedown .25s ease; }
+    @keyframes slidedown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+    .mobile-menu a.link {
+      display: block;
+      font-size: 17px; font-weight: 500; color: var(--text);
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-menu .btn { width: 100%; margin-top: 18px; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 56px; text-align: center; }
+      .hero p.sub { margin-left: auto; margin-right: auto; }
+      .hero-actions, .hero-trust { justify-content: center; }
+      .hero::before { right: -200px; }
+      .feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .who-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .section { padding: 72px 0; }
+      .nav-links { display: none; }
+      .nav-cta .btn { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .steps { grid-template-columns: 1fr; gap: 40px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .who-grid { grid-template-columns: 1fr; }
+      .float.f1 { left: -10px; }
+      .float.f2 { right: -10px; }
+      .cta-box { padding: 52px 24px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+    }
+    @media (max-width: 420px) {
+      .container { padding: 0 18px; }
+      .phone { width: 260px; height: 540px; }
+      .float { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark"><i data-lucide="layers"></i></span>
+        Vaultr
+      </a>
+      <nav class="nav-links">
+        <a href="#features" class="link">Features</a>
+        <a href="#how" class="link">How It Works</a>
+        <a href="#who" class="link">Who It's For</a>
+        <a href="#faq" class="link">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#waitlist" class="btn btn-primary">Join the Waitlist</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" class="link">Features</a>
+    <a href="#how" class="link">How It Works</a>
+    <a href="#who" class="link">Who It's For</a>
+    <a href="#faq" class="link">FAQ</a>
+    <a href="#waitlist" class="btn btn-primary">Join the Waitlist</a>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><i data-lucide="sparkles"></i> Launching soon on iOS</span>
+        <h1 class="reveal d1">Know what your cards are <span class="accent">really worth.</span></h1>
+        <p class="sub reveal d2">Scan any sports card with your phone and Vaultr instantly identifies it, shows its real market value, and tells you exactly what to do next — sell, grade, hold, or bulk.</p>
+        <div class="hero-actions reveal d3">
+          <a href="#waitlist" class="btn btn-primary btn-lg">Join the Waitlist <i data-lucide="arrow-right"></i></a>
+          <a href="#how" class="btn btn-ghost btn-lg">See how it works</a>
+        </div>
+        <div class="hero-trust reveal d4">
+          <span class="tt"><i data-lucide="camera"></i> Scan in seconds</span>
+          <span class="tt"><i data-lucide="badge-check"></i> Live market values</span>
+          <span class="tt"><i data-lucide="heart"></i> Built for everyone</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal d2">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="app-top">
+                <div class="greet">Welcome back<b>Your Vault</b></div>
+                <div class="app-avatar"></div>
+              </div>
+              <div class="scan-frame">
+                <div class="scan-tag"><span class="dot"></span> Identifying…</div>
+                <div class="scan-card">
+                  <div class="pic"></div>
+                  <div class="meta">
+                    <div class="nm"></div>
+                    <div class="yr"></div>
+                  </div>
+                </div>
+                <span class="corner tl"></span>
+                <span class="corner tr"></span>
+                <span class="corner bl"></span>
+                <span class="corner br"></span>
+                <div class="scan-line"></div>
+              </div>
+              <div class="app-result">
+                <div class="row1">
+                  <div>
+                    <div class="nm2">2018 Prizm Rookie</div>
+                    <div class="yr2">#172 · Base</div>
+                  </div>
+                  <div style="text-align:right">
+                    <div class="val">$248</div>
+                    <div class="trend"><i data-lucide="trending-up" style="width:12px;height:12px"></i> +12%</div>
+                  </div>
+                </div>
+                <div class="rec"><i data-lucide="award"></i> Recommended: Get it graded</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="float f1">
+            <span class="ic" style="background:linear-gradient(135deg,#5B5BD6,#8A6CF0)"><i data-lucide="scan-line"></i></span>
+            <div>Card identified<small>in 1.2 seconds</small></div>
+          </div>
+          <div class="float f2">
+            <span class="ic" style="background:linear-gradient(135deg,#16A34A,#34D399)"><i data-lucide="dollar-sign"></i></span>
+            <div>Market value<small>from live comps</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="section problem">
+    <div class="container problem-inner">
+      <span class="eyebrow reveal"><i data-lucide="help-circle"></i> The problem</span>
+      <h2 class="reveal d1">Got a box of cards and no idea what they're worth? <span class="hl">You're not alone.</span></h2>
+      <p class="reveal d2">Most collections are a mystery. Hundreds of cards, a few that might be valuable, and no clear way to tell which is which. Pricing guides are confusing, online comps take forever, and one wrong move means selling a gem for pocket change — or grading a card that isn't worth the fee.</p>
+      <div class="pain-grid">
+        <div class="pain reveal d1">
+          <i data-lucide="search-x"></i>
+          <h4>Which cards matter?</h4>
+          <p>It's nearly impossible to know which cards in a pile are valuable and which are just bulk.</p>
+        </div>
+        <div class="pain reveal d2">
+          <i data-lucide="circle-dollar-sign"></i>
+          <h4>What's it actually worth?</h4>
+          <p>Prices swing constantly. Without live sold data, you're guessing in the dark.</p>
+        </div>
+        <div class="pain reveal d3">
+          <i data-lucide="git-fork"></i>
+          <h4>Sell, grade, or hold?</h4>
+          <p>Even when you know the value, the right next move is rarely obvious.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal"><i data-lucide="zap"></i> Features</span>
+        <h2 class="reveal d1">Everything you need to make sense of your collection</h2>
+        <p class="reveal d2">From a single scan to a confident decision — Vaultr does the heavy lifting so you don't have to be an expert.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card reveal d1">
+          <div class="feat-icon"><i data-lucide="scan-line"></i></div>
+          <h3>Instant Card Scanning</h3>
+          <p>Point your camera at any card and Vaultr identifies the player, year, set, and variation in seconds.</p>
+        </div>
+        <div class="feat-card reveal d2">
+          <div class="feat-icon"><i data-lucide="line-chart"></i></div>
+          <h3>Real Market Values</h3>
+          <p>See accurate prices pulled from live sold listings and recent comps — not outdated guidebooks.</p>
+        </div>
+        <div class="feat-card reveal d3">
+          <div class="feat-icon"><i data-lucide="lightbulb"></i></div>
+          <h3>Smart Recommendations</h3>
+          <p>Get a clear next step for every card: sell individually, sell as a lot, grade, hold, or bulk.</p>
+        </div>
+        <div class="feat-card reveal d1">
+          <div class="feat-icon"><i data-lucide="wallet"></i></div>
+          <h3>Collection Tracking</h3>
+          <p>Build your digital vault and watch your collection's total value update as the market moves.</p>
+        </div>
+        <div class="feat-card reveal d2">
+          <div class="feat-icon"><i data-lucide="users"></i></div>
+          <h3>Built for Everyone</h3>
+          <p>No hobby knowledge required. Vaultr explains everything in plain language, for any experience level.</p>
+        </div>
+        <div class="feat-card reveal d3">
+          <div class="feat-icon"><i data-lucide="store"></i></div>
+          <h3>Marketplace <span class="soon-tag">Coming soon</span></h3>
+          <p>List and sell your cards directly inside the app — reach real buyers without the hassle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section how" id="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal"><i data-lucide="route"></i> How it works</span>
+        <h2 class="reveal d1">From shoebox to confident decision in three steps</h2>
+        <p class="reveal d2">No spreadsheets, no price guides, no guesswork.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal d1">
+          <div class="step-num">1</div>
+          <div class="step-icon"><i data-lucide="camera"></i></div>
+          <h3>Scan your card</h3>
+          <p>Open Vaultr and point your camera at any card. It's identified instantly — no typing required.</p>
+        </div>
+        <div class="step reveal d2">
+          <div class="step-num">2</div>
+          <div class="step-icon"><i data-lucide="badge-dollar-sign"></i></div>
+          <h3>Get value & a recommendation</h3>
+          <p>See its real market value alongside a clear recommendation tailored to that exact card.</p>
+        </div>
+        <div class="step reveal d3">
+          <div class="step-num">3</div>
+          <div class="step-icon"><i data-lucide="check-circle-2"></i></div>
+          <h3>Decide with confidence</h3>
+          <p>Know whether to sell, grade, hold, or bulk — and act without second-guessing yourself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO IT'S FOR ============ -->
+  <section class="section" id="who">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal"><i data-lucide="heart"></i> Who it's for</span>
+        <h2 class="reveal d1">Made for anyone with a pile of cards</h2>
+        <p class="reveal d2">Whether you've collected for decades or just found a box in the closet, Vaultr meets you where you are.</p>
+      </div>
+      <div class="who-grid">
+        <div class="who-card reveal d1">
+          <div class="who-emoji"><i data-lucide="package-open"></i></div>
+          <h3>Parents cleaning out</h3>
+          <p>Finally find out if that box from the attic is worth something before tossing it.</p>
+        </div>
+        <div class="who-card reveal d2">
+          <div class="who-emoji"><i data-lucide="gift"></i></div>
+          <h3>Inherited a collection</h3>
+          <p>Got cards from a parent or grandparent? Understand what you have without the homework.</p>
+        </div>
+        <div class="who-card reveal d3">
+          <div class="who-emoji"><i data-lucide="smile"></i></div>
+          <h3>Casual collectors</h3>
+          <p>Pick up where to start, what to keep, and what to flip — with zero pressure.</p>
+        </div>
+        <div class="who-card reveal d4">
+          <div class="who-emoji"><i data-lucide="trophy"></i></div>
+          <h3>Serious hobbyists</h3>
+          <p>Track your whole collection's value and move faster with live data at your fingertips.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal"><i data-lucide="message-circle-question"></i> FAQ</span>
+        <h2 class="reveal d1">Questions, answered</h2>
+        <p class="reveal d2">Everything you might be wondering before Vaultr launches.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q">How does card scanning work?<span class="chev"><i data-lucide="chevron-down"></i></span></button>
+          <div class="faq-a"><p>Just point your phone's camera at a card. Vaultr uses image recognition to instantly identify the player, year, set, card number, and variation — no manual searching or typing needed.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">How accurate are the values?<span class="chev"><i data-lucide="chevron-down"></i></span></button>
+          <div class="faq-a"><p>Values are based on live sold prices and recent comparable sales — not outdated price guides. That means you see what cards are actually selling for right now, so you can price with confidence.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Is it free?<span class="chev"><i data-lucide="chevron-down"></i></span></button>
+          <div class="faq-a"><p>Vaultr will be free to download and scan your cards. We'll share full pricing details closer to launch — join the waitlist to be the first to know.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">What cards does it support?<span class="chev"><i data-lucide="chevron-down"></i></span></button>
+          <div class="faq-a"><p>Vaultr is launching with support for the major sports — basketball, football, baseball, and soccer — across modern and vintage sets. We're expanding coverage continuously based on what collectors scan most.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">When is it launching?<span class="chev"><i data-lucide="chevron-down"></i></span></button>
+          <div class="faq-a"><p>Vaultr is coming soon to the App Store. Join the waitlist and you'll get an early invite the moment it's ready — plus updates along the way.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WAITLIST CTA ============ -->
+  <section class="cta" id="waitlist">
+    <div class="container">
+      <div class="cta-box reveal">
+        <span class="eyebrow"><i data-lucide="bell"></i> Early access</span>
+        <h2>Be the first to know when Vaultr launches</h2>
+        <p>Join the waitlist for an early invite, launch updates, and the chance to finally understand what your collection is worth.</p>
+
+        <form class="waitlist-form" id="waitlistForm" novalidate>
+          <input type="email" id="emailInput" placeholder="Enter your email address" required aria-label="Email address" />
+          <button type="submit" class="btn btn-lg">Join the Waitlist <i data-lucide="arrow-right"></i></button>
+        </form>
+        <div class="form-note" id="formNote">No spam, ever. Just one note when we go live.</div>
+
+        <div class="form-success" id="formSuccess">
+          <i data-lucide="check-circle-2"></i> Thanks! You're on the list.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-mark"><i data-lucide="layers"></i></span>
+            Vaultr
+          </a>
+          <p class="footer-blurb">The simplest way to understand what your sports card collection is really worth — and what to do with it.</p>
+          <div class="app-store-soon"><i data-lucide="apple"></i> Launching soon on the App Store</div>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>Product</h5>
+            <a href="#features">Features</a>
+            <a href="#how">How It Works</a>
+            <a href="#who">Who It's For</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <h5>Company</h5>
+            <a href="#waitlist">Join the Waitlist</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h5>Follow along</h5>
+            <div class="socials">
+              <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+              <a href="#" aria-label="TikTok"><i data-lucide="music-2"></i></a>
+              <a href="#" aria-label="X"><i data-lucide="twitter"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Vaultr. All rights reserved.</div>
+        <div>
+          <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Icons ----
+    lucide.createIcons();
+
+    // ---- Sticky nav shadow ----
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ---- Mobile menu ----
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+    );
+
+    // ---- FAQ accordion ----
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ---- Waitlist form ----
+    const form = document.getElementById('waitlistForm');
+    const emailInput = document.getElementById('emailInput');
+    const success = document.getElementById('formSuccess');
+    const note = document.getElementById('formNote');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = emailInput.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      if (!valid) {
+        emailInput.focus();
+        emailInput.style.boxShadow = '0 0 0 3px rgba(255,80,80,0.45)';
+        setTimeout(() => { emailInput.style.boxShadow = ''; }, 1600);
+        return;
+      }
+      form.style.display = 'none';
+      note.style.display = 'none';
+      success.classList.add('show');
+      lucide.createIcons();
+    });
+
+    // ---- Scroll reveal ----
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Fallback: if IntersectionObserver missing, reveal all
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+  </script>
+</body>
+</html>
