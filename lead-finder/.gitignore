@@ -1,0 +1,11 @@
+# Secrets — never commit your real API key
+.env
+
+# Generated lead CSVs
+output/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
