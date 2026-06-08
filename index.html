@@ -652,7 +652,7 @@
       transition: background .2s, transform .2s;
     }
     .socials a:hover { background: var(--purple); transform: translateY(-3px); }
-    .socials a [data-lucide] { width: 18px; height: 18px; color: #fff; }
+    .socials a [data-lucide], .socials a svg { width: 18px; height: 18px; color: #fff; }
     .footer-bottom {
       display: flex; align-items: center; justify-content: space-between;
       gap: 16px; flex-wrap: wrap;
@@ -1045,9 +1045,23 @@
           <div class="footer-col">
             <h5>Follow along</h5>
             <div class="socials">
-              <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-              <a href="#" aria-label="TikTok"><i data-lucide="music-2"></i></a>
-              <a href="#" aria-label="X"><i data-lucide="twitter"></i></a>
+              <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="#" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M16.5 3h-3v12.2a2.3 2.3 0 1 1-2-2.28V9.85a5.5 5.5 0 1 0 5 5.48V8.66a6.36 6.36 0 0 0 3.6 1.12V6.7A3.7 3.7 0 0 1 16.5 3z"></path>
+                </svg>
+              </a>
+              <a href="#" aria-label="X">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.83l4.713 6.231 5.447-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z"></path>
+                </svg>
+              </a>
             </div>
           </div>
         </div>
