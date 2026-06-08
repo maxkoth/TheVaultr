@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vaultr — Logo System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --purple:#5B5BD6; --purple-2:#7C7CF0; --purple-deep:#4747B8;
+    --ink:#0F1020; --muted:#6A6C7E; --line:#E9E9F0; --bg:#F4F4F8; --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding:0 0 80px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  header.top{background:#fff;border-bottom:1px solid var(--line);padding:46px 0 40px;margin-bottom:40px}
+  header.top .pill{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--purple);background:#EEEEFB;padding:6px 13px;border-radius:999px;margin-bottom:16px}
+  header.top h1{font-family:'Sora';font-size:34px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px}
+  header.top p{color:var(--muted);font-size:16px;max-width:600px}
+
+  section.concept{background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;margin-bottom:34px;box-shadow:0 6px 26px rgba(16,16,32,.04)}
+  .c-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+  .c-head .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--purple)}
+  .c-head h2{font-family:'Sora';font-size:24px;font-weight:700;letter-spacing:-.02em;margin:4px 0 6px}
+  .c-head p{color:var(--muted);font-size:14.5px;max-width:520px}
+  .copybtn{font-family:'Inter';font-size:13px;font-weight:600;color:#fff;background:var(--purple);border:none;border-radius:10px;padding:10px 16px;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap}
+  .copybtn:hover{background:var(--purple-deep)}
+  .copybtn:active{transform:scale(.97)}
+  .copybtn.done{background:#16B364}
+
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .panel{border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;min-height:170px;text-align:center}
+  .panel.dark{background:var(--ink);border-color:transparent}
+  .panel.soft{background:var(--bg)}
+  .label{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:auto}
+  .panel.dark .label{color:#8A8CA0}
+
+  /* lockup */
+  .lockup{display:inline-flex;align-items:center;gap:12px}
+  .lockup .word{font-family:'Sora';font-weight:700;letter-spacing:-.03em;color:var(--ink);line-height:1}
+  .lockup.on-dark .word{color:#fff}
+  .lockup.ink .word{color:#0F1020}.lockup.ink svg{color:#0F1020}
+  .lockup.white .word{color:#fff}.lockup.white svg{color:#fff}
+
+  /* app icon tiles */
+  .iconrow{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;justify-content:center}
+  .appicon{display:grid;place-items:center;box-shadow:0 8px 22px rgba(16,16,32,.10)}
+  .appicon.grad{background:linear-gradient(145deg,var(--purple),var(--purple-2))}
+  .appicon.white{background:#fff;border:1px solid var(--line)}
+  .ic96{width:96px;height:96px;border-radius:22px}
+  .ic56{width:56px;height:56px;border-radius:14px}
+  .ic32{width:32px;height:32px;border-radius:9px}
+
+  /* symbol color helpers */
+  .sym-white{color:#fff}
+  .sym-purple{color:var(--purple)}
+
+  .sub{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:26px 0 14px;width:100%}
+
+  details{margin-top:22px;border-top:1px dashed var(--line);padding-top:16px}
+  summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--purple)}
+  pre{margin-top:12px;background:#0F1020;color:#D7D7F0;border-radius:12px;padding:16px;overflow:auto;font-size:12px;line-height:1.6;font-family:ui-monospace,Menlo,monospace}
+
+  /* shared wordmark / mono section */
+  .block{background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;margin-bottom:34px}
+  .block h2{font-family:'Sora';font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .block .hint{color:var(--muted);font-size:14.5px;margin-bottom:24px}
+  .wm-row{display:flex;align-items:baseline;gap:40px;flex-wrap:wrap;padding:20px 0}
+  .wm{font-family:'Sora';font-weight:700;letter-spacing:-.035em;color:var(--ink)}
+  .wm .v{color:var(--purple)}
+
+  @media(max-width:640px){.c-head{flex-direction:column}header.top h1{font-size:27px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="pill">Brand · Logo System</span>
+    <h1>Vaultr</h1>
+    <p>Three clean, geometric symbol directions — each shown as a primary lockup, iOS app icon (both fills), wordmark, and monochrome. Wordmark set in <b>Sora</b>. All artwork is inline SVG; use the copy button on each concept to grab the symbol code.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============================================================= -->
+  <!-- DEFS: each symbol uses currentColor so one path serves every  -->
+  <!-- color/background. Shield V is a transparent knockout.         -->
+  <!-- ============================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- A · Stacked Card -->
+      <symbol id="sym-cards" viewBox="0 0 48 48">
+        <rect x="19" y="9" width="16" height="22" rx="3.4" transform="rotate(9 27 20)" fill="none" stroke="currentColor" stroke-width="3"/>
+        <path d="M15.6 15 H27 L32 20 V35.4 a3.6 3.6 0 0 1 -3.6 3.6 H15.6 a3.6 3.6 0 0 1 -3.6 -3.6 V18.6 a3.6 3.6 0 0 1 3.6 -3.6 Z" fill="currentColor"/>
+      </symbol>
+      <!-- B · Vault Shield (V knockout) -->
+      <symbol id="sym-shield" viewBox="0 0 48 48">
+        <path fill="currentColor" fill-rule="evenodd"
+          d="M24 6 L38 11.5 V23 C38 31.5 31.8 37.5 24 41.5 C16.2 37.5 10 31.5 10 23 V11.5 Z
+             M17 18 L21 18 L24 23.5 L27 18 L31 18 L24 29 Z"/>
+      </symbol>
+      <!-- C · V Monogram -->
+      <symbol id="sym-v" viewBox="0 0 48 48">
+        <path d="M13 15 L24 33 L35 15" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ============================ CONCEPT A ============================ -->
+  <section class="concept">
+    <div class="c-head">
+      <div>
+        <div class="tag">Concept A · Recommended</div>
+        <h2>Stacked Card</h2>
+        <p>A card with a second card tucked behind it — the literal object the app is built around, plus a hint of “your collection.” The clipped corner keeps it reading as a card, not a square.</p>
+      </div>
+      <button class="copybtn" data-sym="cards">Copy symbol SVG</button>
+    </div>
+
+    <div class="sub">Primary logo</div>
+    <div class="row">
+      <div class="panel">
+        <span class="lockup"><svg width="46" height="46" class="sym-purple"><use href="#sym-cards"/></svg><span class="word" style="font-size:32px">Vaultr</span></span>
+        <span class="label">Symbol + wordmark</span>
+      </div>
+      <div class="panel">
+        <span class="lockup"><svg width="26" height="26" class="sym-purple"><use href="#sym-cards"/></svg><span class="word" style="font-size:18px">Vaultr</span></span>
+        <span class="label">Scaled down</span>
+      </div>
+    </div>
+
+    <div class="sub">App icon</div>
+    <div class="row">
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon grad ic96"><svg width="58" height="58" class="sym-white"><use href="#sym-cards"/></svg></div>
+          <div class="appicon grad ic56"><svg width="34" height="34" class="sym-white"><use href="#sym-cards"/></svg></div>
+          <div class="appicon grad ic32"><svg width="20" height="20" class="sym-white"><use href="#sym-cards"/></svg></div>
+        </div>
+        <span class="label">Purple background · white symbol</span>
+      </div>
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon white ic96"><svg width="58" height="58" class="sym-purple"><use href="#sym-cards"/></svg></div>
+          <div class="appicon white ic56"><svg width="34" height="34" class="sym-purple"><use href="#sym-cards"/></svg></div>
+          <div class="appicon white ic32"><svg width="20" height="20" class="sym-purple"><use href="#sym-cards"/></svg></div>
+        </div>
+        <span class="label">White background · purple symbol</span>
+      </div>
+    </div>
+
+    <div class="sub">Monochrome</div>
+    <div class="row">
+      <div class="panel soft">
+        <span class="lockup ink"><svg width="40" height="40"><use href="#sym-cards"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid black</span>
+      </div>
+      <div class="panel dark">
+        <span class="lockup white"><svg width="40" height="40"><use href="#sym-cards"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid white</span>
+      </div>
+    </div>
+
+    <details>
+      <summary>View / copy symbol SVG code</summary>
+      <pre data-code="cards"></pre>
+    </details>
+  </section>
+
+  <!-- ============================ CONCEPT B ============================ -->
+  <section class="concept">
+    <div class="c-head">
+      <div>
+        <div class="tag">Concept B</div>
+        <h2>Vault Shield</h2>
+        <p>A geometric shield (security, trust, “keep it safe”) with a “V” cut cleanly out of the center as negative space — one mark that carries both the vault idea and the initial.</p>
+      </div>
+      <button class="copybtn" data-sym="shield">Copy symbol SVG</button>
+    </div>
+
+    <div class="sub">Primary logo</div>
+    <div class="row">
+      <div class="panel">
+        <span class="lockup"><svg width="46" height="46" class="sym-purple"><use href="#sym-shield"/></svg><span class="word" style="font-size:32px">Vaultr</span></span>
+        <span class="label">Symbol + wordmark</span>
+      </div>
+      <div class="panel">
+        <span class="lockup"><svg width="26" height="26" class="sym-purple"><use href="#sym-shield"/></svg><span class="word" style="font-size:18px">Vaultr</span></span>
+        <span class="label">Scaled down</span>
+      </div>
+    </div>
+
+    <div class="sub">App icon</div>
+    <div class="row">
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon grad ic96"><svg width="56" height="56" class="sym-white"><use href="#sym-shield"/></svg></div>
+          <div class="appicon grad ic56"><svg width="33" height="33" class="sym-white"><use href="#sym-shield"/></svg></div>
+          <div class="appicon grad ic32"><svg width="19" height="19" class="sym-white"><use href="#sym-shield"/></svg></div>
+        </div>
+        <span class="label">Purple background · white symbol</span>
+      </div>
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon white ic96"><svg width="56" height="56" class="sym-purple"><use href="#sym-shield"/></svg></div>
+          <div class="appicon white ic56"><svg width="33" height="33" class="sym-purple"><use href="#sym-shield"/></svg></div>
+          <div class="appicon white ic32"><svg width="19" height="19" class="sym-purple"><use href="#sym-shield"/></svg></div>
+        </div>
+        <span class="label">White background · purple symbol</span>
+      </div>
+    </div>
+
+    <div class="sub">Monochrome</div>
+    <div class="row">
+      <div class="panel soft">
+        <span class="lockup ink"><svg width="40" height="40"><use href="#sym-shield"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid black</span>
+      </div>
+      <div class="panel dark">
+        <span class="lockup white"><svg width="40" height="40"><use href="#sym-shield"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid white</span>
+      </div>
+    </div>
+
+    <details>
+      <summary>View / copy symbol SVG code</summary>
+      <pre data-code="shield"></pre>
+    </details>
+  </section>
+
+  <!-- ============================ CONCEPT C ============================ -->
+  <section class="concept">
+    <div class="c-head">
+      <div>
+        <div class="tag">Concept C</div>
+        <h2>V Monogram</h2>
+        <p>The pure initial — a confident geometric “V” with rounded joints. The simplest, most flexible mark; reads instantly at any size and pairs cleanly with the wordmark.</p>
+      </div>
+      <button class="copybtn" data-sym="v">Copy symbol SVG</button>
+    </div>
+
+    <div class="sub">Primary logo</div>
+    <div class="row">
+      <div class="panel">
+        <span class="lockup"><svg width="46" height="46" class="sym-purple"><use href="#sym-v"/></svg><span class="word" style="font-size:32px">Vaultr</span></span>
+        <span class="label">Symbol + wordmark</span>
+      </div>
+      <div class="panel">
+        <span class="lockup"><svg width="26" height="26" class="sym-purple"><use href="#sym-v"/></svg><span class="word" style="font-size:18px">Vaultr</span></span>
+        <span class="label">Scaled down</span>
+      </div>
+    </div>
+
+    <div class="sub">App icon</div>
+    <div class="row">
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon grad ic96"><svg width="56" height="56" class="sym-white"><use href="#sym-v"/></svg></div>
+          <div class="appicon grad ic56"><svg width="33" height="33" class="sym-white"><use href="#sym-v"/></svg></div>
+          <div class="appicon grad ic32"><svg width="19" height="19" class="sym-white"><use href="#sym-v"/></svg></div>
+        </div>
+        <span class="label">Purple background · white symbol</span>
+      </div>
+      <div class="panel">
+        <div class="iconrow">
+          <div class="appicon white ic96"><svg width="56" height="56" class="sym-purple"><use href="#sym-v"/></svg></div>
+          <div class="appicon white ic56"><svg width="33" height="33" class="sym-purple"><use href="#sym-v"/></svg></div>
+          <div class="appicon white ic32"><svg width="19" height="19" class="sym-purple"><use href="#sym-v"/></svg></div>
+        </div>
+        <span class="label">White background · purple symbol</span>
+      </div>
+    </div>
+
+    <div class="sub">Monochrome</div>
+    <div class="row">
+      <div class="panel soft">
+        <span class="lockup ink"><svg width="40" height="40"><use href="#sym-v"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid black</span>
+      </div>
+      <div class="panel dark">
+        <span class="lockup white"><svg width="40" height="40"><use href="#sym-v"/></svg><span class="word" style="font-size:28px">Vaultr</span></span>
+        <span class="label">Solid white</span>
+      </div>
+    </div>
+
+    <details>
+      <summary>View / copy symbol SVG code</summary>
+      <pre data-code="v"></pre>
+    </details>
+  </section>
+
+  <!-- ============================ WORDMARK ============================ -->
+  <div class="block">
+    <h2>Wordmark</h2>
+    <p class="hint">“Vaultr” set in Sora 700, tightened tracking. The initial “V” can pick up the brand purple to tie back to the symbol, or stay solid ink.</p>
+    <div class="wm-row">
+      <span class="wm" style="font-size:54px"><span class="v">V</span>aultr</span>
+      <span class="wm" style="font-size:34px"><span class="v">V</span>aultr</span>
+      <span class="wm" style="font-size:22px"><span class="v">V</span>aultr</span>
+      <span class="wm" style="font-size:16px"><span class="v">V</span>aultr</span>
+    </div>
+    <div class="wm-row" style="border-top:1px solid var(--line)">
+      <span class="wm" style="font-size:40px">Vaultr</span>
+      <span class="wm" style="font-size:40px;font-weight:800;letter-spacing:-.04em">Vaultr</span>
+      <span class="wm" style="font-size:40px;font-weight:600;letter-spacing:-.02em">Vaultr</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Clean, standalone (self-contained) symbol SVGs for copy + code view.
+  const SVGS = {
+    cards: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <rect x="19" y="9" width="16" height="22" rx="3.4" transform="rotate(9 27 20)" stroke="#5B5BD6" stroke-width="3"/>
+  <path d="M15.6 15 H27 L32 20 V35.4 a3.6 3.6 0 0 1 -3.6 3.6 H15.6 a3.6 3.6 0 0 1 -3.6 -3.6 V18.6 a3.6 3.6 0 0 1 3.6 -3.6 Z" fill="#5B5BD6"/>
+</svg>`,
+    shield: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <path fill="#5B5BD6" fill-rule="evenodd" d="M24 6 L38 11.5 V23 C38 31.5 31.8 37.5 24 41.5 C16.2 37.5 10 31.5 10 23 V11.5 Z M17 18 L21 18 L24 23.5 L27 18 L31 18 L24 29 Z"/>
+</svg>`,
+    v: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M13 15 L24 33 L35 15" stroke="#5B5BD6" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`
+  };
+
+  // fill code blocks
+  document.querySelectorAll('pre[data-code]').forEach(pre=>{
+    pre.textContent = SVGS[pre.dataset.code];
+  });
+
+  // copy buttons
+  document.querySelectorAll('.copybtn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(SVGS[btn.dataset.sym]);
+        const t = btn.textContent; btn.textContent = '✓ Copied'; btn.classList.add('done');
+        setTimeout(()=>{btn.textContent=t; btn.classList.remove('done');},1600);
+      }catch(e){
+        // fallback: select the code block
+        const pre = document.querySelector(`pre[data-code="${btn.dataset.sym}"]`);
+        const r=document.createRange(); r.selectNode(pre);
+        getSelection().removeAllRanges(); getSelection().addRange(r);
+      }
+    });
+  });
+</script>
+</body>
+</html>
