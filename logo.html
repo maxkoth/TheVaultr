@@ -43,17 +43,12 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <span class="pill">Vaultr · Logo Pitch Deck</span>
-  <h1>Built from one idea: the vault &amp; the card</h1>
-  <p>Twenty crafted marks — every one tied to the name (vault, safe, dial, lock, coin) or to what the app does (trading cards, stacks, scanning, value). Split evenly between premium navy + gold and the purple + white brand. The fusion set (card × vault) is the most ownable. Each shows the full logo, app icon, and a 40px shrink test.</p>
+  <span class="pill">Vaultr · Selected Concepts</span>
+  <h1>Trading Card, Fanned Cards &amp; Card-in-Vault</h1>
+  <p>The three shortlisted marks — each shown as the full logo, app icon, and a 40px shrink test.</p>
 </div></header>
 <div class="wrap">
-  <div class="group-head"><h2>The Vault</h2><span class="ln"></span></div>
-  <div class="grid" id="gVault"></div>
-  <div class="group-head"><h2>Card Trading</h2><span class="ln"></span></div>
-  <div class="grid" id="gCard"></div>
-  <div class="group-head"><h2>Fusion · Card × Vault</h2><span class="star">Priority</span><span class="ln"></span></div>
-  <div class="grid" id="gFuse"></div>
+  <div class="grid" id="gSel"></div>
 </div>
 <footer>Vaultr · 20 concepts · vault + card · inline SVG, optimized for copy</footer>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="grad-defs"></defs></svg>
@@ -95,8 +90,7 @@ function card(d){const tag=isGold(d)?'<span class="tag g">Gold</span>':'<span cl
   return '<div class="vcard"><div class="vtop"><div class="lab"><span class="num">'+d.num+'</span>'+d.name+tag+'</div>'+
    '<div class="btns"><button class="copybtn" data-n="'+d.num+'" data-t="logo">Logo</button><button class="copybtn" data-n="'+d.num+'" data-t="icon">Icon</button></div></div>'+
    '<div class="vrow"><div class="logobox">'+logoSVG(d)+'</div><div class="colwrap"><div class="iset">'+iconSVG(d,64)+iconSVG(d,40)+'</div><div class="cap">64 · 40 px</div></div></div></div>';}
-function fill(id,a,b){document.getElementById(id).innerHTML=DATA.filter(d=>d.num>=a&&d.num<=b).map(card).join('');}
-fill('gVault',1,7);fill('gCard',8,14);fill('gFuse',15,20);
+document.getElementById('gSel').innerHTML=[8,9,15].map(n=>card(byNum[n])).join('');
 document.querySelectorAll('.copybtn').forEach(btn=>{btn.addEventListener('click',async()=>{const d=byNum[btn.dataset.n];
   const code=btn.dataset.t==='logo'?stdLogo(d):stdIcon(d);
   try{await navigator.clipboard.writeText(code);}catch(e){const ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}
