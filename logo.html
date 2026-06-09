@@ -31,10 +31,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="group-head"><span class="dot" style="background:#1E1B4B"></span><span class="dot" style="background:#F5B301"></span><h2>Navy + Gold</h2><span class="ln"></span></div>
-  <div class="grid" id="gG"></div>
-  <div class="group-head"><span class="dot" style="background:#5B5BD6"></span><span class="dot" style="background:#fff;border:1px solid #E5E5EE"></span><h2>Purple + White</h2><span class="ln"></span></div>
-  <div class="grid" id="gP"></div>
+  <div class="grid" id="gAll"></div>
 </div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="grad-defs"></defs></svg>
 <script>
@@ -70,9 +67,8 @@ document.getElementById('grad-defs').innerHTML=GRADS;
 const isGold=d=>d.tile==='url(#gNavy)';
 function logoSVG(d){return '<svg viewBox="0 0 '+d.wordw+' 96">'+d.word+'</svg>';}
 function std(d){return '<svg xmlns="http://www.w3.org/2000/svg" width="'+d.wordw+'" height="96" viewBox="0 0 '+d.wordw+' 96"><defs>'+GRADS+'</defs>'+d.word+'</svg>';}
-function cell(d){return '<div class="cell" data-n="'+d.num+'"><div class="hd"><b>'+d.num+'</b>'+d.name+'</div><div class="logo">'+logoSVG(d)+'</div><span class="copied">Copied ✓</span></div>';}
-document.getElementById('gG').innerHTML=DATA.filter(isGold).map(cell).join('');
-document.getElementById('gP').innerHTML=DATA.filter(d=>!isGold(d)).map(cell).join('');
+function cell(d){return '<div class="cell" data-n="'+d.num+'"><div class="logo">'+logoSVG(d)+'</div><span class="copied">Copied ✓</span></div>';}
+document.getElementById('gAll').innerHTML=DATA.map(cell).join('');
 const byNum={};DATA.forEach(d=>byNum[d.num]=d);
 document.querySelectorAll('.cell').forEach(c=>{c.addEventListener('click',async()=>{
   const code=std(byNum[c.dataset.n]);
