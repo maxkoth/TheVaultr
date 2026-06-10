@@ -631,7 +631,16 @@
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     footer .logo { color: #fff; }
-    .footer-blurb { max-width: 320px; margin-top: 16px; font-size: 14.5px; color: #9092A6; }
+    .hero-tagline {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 22px;
+    }
+    .footer-tagline { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; margin-top: 14px; }
+    .footer-blurb { max-width: 320px; margin-top: 10px; font-size: 14.5px; color: #9092A6; }
     .app-store-soon {
       display: inline-flex; align-items: center; gap: 8px;
       margin-top: 18px;
@@ -766,6 +775,7 @@
       <div class="hero-copy">
         <span class="eyebrow reveal"><i data-lucide="sparkles"></i> Launching soon on iOS</span>
         <h1 class="reveal d1">Know what your cards are <span class="accent">really worth.</span></h1>
+        <p class="hero-tagline reveal d2">From collection to capital.</p>
         <p class="sub reveal d2">Scan a whole pile of cards at once. Vaultr identifies each one, shows its real market value, and tells you exactly what to do with it — sell, grade, hold, or bulk.</p>
         <div class="hero-actions reveal d3">
           <a href="#waitlist" class="btn btn-primary btn-lg">Join the Waitlist <i data-lucide="arrow-right"></i></a>
@@ -1026,6 +1036,7 @@
             <span class="logo-mark"><i data-lucide="layers"></i></span>
             Vaultr
           </a>
+          <p class="footer-tagline">From collection to capital.</p>
           <p class="footer-blurb">The simplest way to understand what your sports card collection is really worth — and what to do with it.</p>
           <div class="app-store-soon"><i data-lucide="apple"></i> Launching soon on the App Store</div>
         </div>
