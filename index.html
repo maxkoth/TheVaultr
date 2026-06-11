@@ -25,6 +25,18 @@
       --purple-dark: #4747B8;
       --purple-light: #EEEEFB;
       --purple-glow: rgba(91, 91, 214, 0.25);
+
+      /* Secondary accent — gold ("from collection to capital") */
+      --gold: #E0992B;
+      --gold-light: #FBF1DC;
+      --gold-glow: rgba(224, 153, 43, 0.28);
+
+      /* Accent hues for icon tiles */
+      --c-teal: #11A89B;
+      --c-blue: #3E7BE8;
+      --c-rose: #E8588A;
+      --c-green: #16A34A;
+      --c-cyan: #1FA6C9;
       --ink: #0F1020;
       --text: #2B2C3B;
       --muted: #6A6C7E;
@@ -452,6 +464,22 @@
       margin-bottom: 18px;
     }
     .feat-icon [data-lucide] { width: 24px; height: 24px; color: var(--purple); }
+
+    /* ---------- Colored icon tiles ---------- */
+    .ic-purple { background: rgba(91,91,214,0.12); }
+    .ic-purple [data-lucide] { color: var(--purple); }
+    .ic-teal   { background: rgba(17,168,155,0.13); }
+    .ic-teal   [data-lucide] { color: var(--c-teal); }
+    .ic-gold   { background: var(--gold-light); }
+    .ic-gold   [data-lucide] { color: var(--gold); }
+    .ic-blue   { background: rgba(62,123,232,0.12); }
+    .ic-blue   [data-lucide] { color: var(--c-blue); }
+    .ic-rose   { background: rgba(232,88,138,0.12); }
+    .ic-rose   [data-lucide] { color: var(--c-rose); }
+    .ic-green  { background: rgba(22,163,74,0.13); }
+    .ic-green  [data-lucide] { color: var(--c-green); }
+    .ic-cyan   { background: rgba(31,166,201,0.13); }
+    .ic-cyan   [data-lucide] { color: var(--c-cyan); }
     .feat-card h3 { font-size: 19px; margin-bottom: 9px; display: flex; align-items: center; gap: 9px; }
     .feat-card p { font-size: 15px; color: var(--muted); }
     .soon-tag {
@@ -637,7 +665,7 @@
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--purple);
+      color: var(--gold);
       margin-bottom: 22px;
     }
     .footer-tagline { color: #fff; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; margin-top: 14px; }
@@ -877,32 +905,32 @@
       </div>
       <div class="feat-grid">
         <div class="feat-card reveal d1">
-          <div class="feat-icon"><i data-lucide="scan-line"></i></div>
+          <div class="feat-icon ic-purple"><i data-lucide="scan-line"></i></div>
           <h3>Bulk Scanning</h3>
           <p>Point your camera at a whole stack and Vaultr identifies cards by the dozen — the player, year, set, and variation for each, not one at a time.</p>
         </div>
         <div class="feat-card reveal d2">
-          <div class="feat-icon"><i data-lucide="line-chart"></i></div>
+          <div class="feat-icon ic-green"><i data-lucide="line-chart"></i></div>
           <h3>Real Market Values</h3>
           <p>See accurate prices pulled from live sold listings and recent comps — not outdated guidebooks.</p>
         </div>
         <div class="feat-card reveal d3">
-          <div class="feat-icon"><i data-lucide="lightbulb"></i></div>
+          <div class="feat-icon ic-gold"><i data-lucide="lightbulb"></i></div>
           <h3>Smart Recommendations</h3>
           <p>Get a clear next step for every card: sell individually, sell as a lot, grade, hold, or bulk.</p>
         </div>
         <div class="feat-card reveal d1">
-          <div class="feat-icon"><i data-lucide="wallet"></i></div>
+          <div class="feat-icon ic-blue"><i data-lucide="wallet"></i></div>
           <h3>Collection Tracking</h3>
           <p>Build your digital vault and watch your collection's total value update as the market moves.</p>
         </div>
         <div class="feat-card reveal d2">
-          <div class="feat-icon"><i data-lucide="users"></i></div>
+          <div class="feat-icon ic-rose"><i data-lucide="users"></i></div>
           <h3>Built for Everyone</h3>
           <p>No hobby knowledge required. Vaultr explains everything in plain language, for any experience level.</p>
         </div>
         <div class="feat-card reveal d3">
-          <div class="feat-icon"><i data-lucide="store"></i></div>
+          <div class="feat-icon ic-teal"><i data-lucide="store"></i></div>
           <h3>Marketplace <span class="soon-tag">Coming soon</span></h3>
           <p>List and sell your cards directly inside the app — reach real buyers without the hassle.</p>
         </div>
@@ -951,22 +979,22 @@
       </div>
       <div class="who-grid">
         <div class="who-card reveal d1">
-          <div class="who-emoji"><i data-lucide="package-open"></i></div>
+          <div class="who-emoji ic-gold"><i data-lucide="package-open"></i></div>
           <h3>Parents cleaning out</h3>
           <p>Scan whole boxes from the attic at once and finally find out if they're worth something before tossing them.</p>
         </div>
         <div class="who-card reveal d2">
-          <div class="who-emoji"><i data-lucide="gift"></i></div>
+          <div class="who-emoji ic-rose"><i data-lucide="gift"></i></div>
           <h3>Inherited a collection</h3>
           <p>Got cards from a parent or grandparent? Understand what you have without the homework.</p>
         </div>
         <div class="who-card reveal d3">
-          <div class="who-emoji"><i data-lucide="smile"></i></div>
+          <div class="who-emoji ic-teal"><i data-lucide="smile"></i></div>
           <h3>Casual collectors</h3>
           <p>Pick up where to start, what to keep, and what to flip — with zero pressure.</p>
         </div>
         <div class="who-card reveal d4">
-          <div class="who-emoji"><i data-lucide="trophy"></i></div>
+          <div class="who-emoji ic-blue"><i data-lucide="trophy"></i></div>
           <h3>Serious hobbyists</h3>
           <p>Track your whole collection's value and move faster with live data at your fingertips.</p>
         </div>
