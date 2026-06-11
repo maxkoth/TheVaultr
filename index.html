@@ -21,15 +21,22 @@
 
   <style>
     :root {
-      --purple: #5B5BD6;
-      --purple-dark: #4747B8;
-      --purple-light: #EEEEFB;
-      --purple-glow: rgba(91, 91, 214, 0.25);
+      --purple: #6C63FF;          /* Electric Violet */
+      --purple-dark: #5D5FEF;
+      --purple-bright: #8B7DFF;
+      --purple-light: #EEEDFF;
+      --purple-glow: rgba(108, 99, 255, 0.30);
 
-      /* Secondary accent — gold ("from collection to capital") */
-      --gold: #E0992B;
-      --gold-light: #FBF1DC;
-      --gold-glow: rgba(224, 153, 43, 0.28);
+      /* Secondary accent — Wealth Gold ("from collection to capital") */
+      --gold: #D9A441;
+      --gold-bright: #F0C36B;
+      --gold-light: #FAF1DC;
+      --gold-glow: rgba(217, 164, 65, 0.30);
+
+      /* Vault palette */
+      --navy: #0F1226;
+      --navy-2: #1A1F3A;
+      --silver: #F5F6FA;
 
       /* Accent hues for icon tiles */
       --c-teal: #11A89B;
@@ -126,11 +133,11 @@
     .btn i, .btn [data-lucide] { width: 17px; height: 17px; }
 
     .btn-primary {
-      background: var(--purple);
+      background: linear-gradient(135deg, var(--purple), var(--purple-bright));
       color: #fff;
-      box-shadow: 0 8px 22px var(--purple-glow);
+      box-shadow: 0 8px 24px rgba(108,99,255,0.40);
     }
-    .btn-primary:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: 0 14px 30px var(--purple-glow); }
+    .btn-primary:hover { background: linear-gradient(135deg, var(--purple-dark), var(--purple)); transform: translateY(-2px); box-shadow: 0 16px 38px rgba(108,99,255,0.52); }
     .btn-primary:active { transform: translateY(0); }
 
     .btn-ghost {
@@ -148,16 +155,27 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: saturate(180%) blur(16px);
-      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      background: var(--navy);
       border-bottom: 1px solid transparent;
       transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
     }
+    /* At top (over dark hero) — light text */
+    header.nav .logo { color: #fff; }
+    header.nav .nav-links a.link { color: rgba(255,255,255,0.72); }
+    header.nav .nav-links a.link:hover { color: #fff; }
+    header.nav .menu-toggle { color: #fff; }
+    /* Scrolled (over light body) — dark text, frosted bar */
     header.nav.scrolled {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
       border-bottom-color: var(--line);
       box-shadow: 0 4px 20px rgba(16,16,32,0.04);
     }
+    header.nav.scrolled .logo { color: var(--ink); }
+    header.nav.scrolled .nav-links a.link { color: var(--muted); }
+    header.nav.scrolled .nav-links a.link:hover { color: var(--ink); }
+    header.nav.scrolled .menu-toggle { color: var(--ink); }
     .nav-inner {
       display: flex;
       align-items: center;
@@ -176,7 +194,7 @@
     .logo-mark {
       width: 34px; height: 34px;
       border-radius: 10px;
-      background: linear-gradient(135deg, var(--purple), #7C7CF0);
+      background: linear-gradient(135deg, var(--purple), var(--purple-bright));
       display: grid; place-items: center;
       box-shadow: 0 6px 16px var(--purple-glow);
     }
@@ -213,23 +231,37 @@
       position: relative;
       padding: 80px 0 90px;
       overflow: hidden;
+      background: linear-gradient(180deg, var(--navy), var(--navy-2));
     }
+    /* glowing violet accent (top-right) */
     .hero::before {
       content: "";
       position: absolute;
       top: -240px; right: -160px;
-      width: 620px; height: 620px;
-      background: radial-gradient(circle, rgba(91,91,214,0.14), transparent 65%);
+      width: 640px; height: 640px;
+      background: radial-gradient(circle, rgba(108,99,255,0.45), transparent 62%);
       z-index: 0;
     }
+    /* subtle gold glow (bottom-left) — the "hidden value" */
     .hero::after {
       content: "";
       position: absolute;
       bottom: -260px; left: -180px;
-      width: 540px; height: 540px;
-      background: radial-gradient(circle, rgba(124,124,240,0.10), transparent 65%);
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(217,164,65,0.22), transparent 65%);
       z-index: 0;
     }
+    /* Dark-hero text treatment */
+    .hero h1 { color: #fff; }
+    .hero .eyebrow { background: rgba(108,99,255,0.18); color: #C3BEFF; }
+    .hero p.sub { color: rgba(255,255,255,0.72); }
+    .hero .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+    .hero .btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.32); transform: translateY(-2px); }
     .hero-grid {
       position: relative;
       z-index: 1;
@@ -245,7 +277,7 @@
       margin-bottom: 22px;
     }
     .hero h1 .accent {
-      background: linear-gradient(120deg, var(--purple), #8A6CF0);
+      background: linear-gradient(110deg, var(--purple-bright) 10%, var(--gold) 90%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -264,9 +296,12 @@
     }
     .hero-trust .tt {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 14px; color: var(--muted); font-weight: 500;
+      font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 500;
     }
-    .hero-trust .tt [data-lucide] { width: 17px; height: 17px; color: var(--purple); }
+    .hero-trust .tt [data-lucide] { width: 17px; height: 17px; }
+    .hero-trust .tt.t-violet [data-lucide] { color: var(--purple-bright); }
+    .hero-trust .tt.t-gold   [data-lucide] { color: var(--gold-bright); }
+    .hero-trust .tt.t-bviolet [data-lucide] { color: #A78BFA; }
 
     /* ---------- Phone mockup ---------- */
     .phone-wrap {
@@ -281,7 +316,7 @@
       background: #0F1020;
       border-radius: 44px;
       padding: 13px;
-      box-shadow: var(--shadow-lg), 0 40px 80px rgba(91,91,214,0.18);
+      box-shadow: var(--shadow-lg), 0 40px 80px rgba(108,99,255,0.28);
       transform: rotateY(-9deg) rotateX(3deg);
       transition: transform .5s ease;
     }
@@ -313,7 +348,7 @@
     .app-top .greet b { display: block; font-size: 16px; color: var(--ink); font-weight: 700; }
     .app-avatar {
       width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), #8A6CF0);
+      background: linear-gradient(135deg, var(--purple), var(--purple-bright));
     }
     .scan-frame {
       margin: 6px 20px 16px;
@@ -390,7 +425,7 @@
     }
     .app-result .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
     .app-result .nm2 { font-size: 13px; font-weight: 700; color: var(--ink); }
-    .app-result .val { font-size: 19px; font-weight: 800; color: var(--ink); }
+    .app-result .val { font-size: 19px; font-weight: 800; color: #B8860B; }
     .app-result .yr2 { font-size: 11px; color: var(--muted); }
     .app-result .trend { font-size: 11px; color: #16A34A; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
     .app-result .rec {
@@ -466,7 +501,7 @@
     .feat-icon [data-lucide] { width: 24px; height: 24px; color: var(--purple); }
 
     /* ---------- Colored icon tiles ---------- */
-    .ic-purple { background: rgba(91,91,214,0.12); }
+    .ic-purple { background: rgba(108,99,255,0.13); }
     .ic-purple [data-lucide] { color: var(--purple); }
     .ic-teal   { background: rgba(17,168,155,0.13); }
     .ic-teal   [data-lucide] { color: var(--c-teal); }
@@ -579,12 +614,12 @@
     .cta { padding: 100px 0; }
     .cta-box {
       position: relative;
-      background: linear-gradient(135deg, #5B5BD6, #7C5BE0 55%, #8A6CF0);
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple) 55%, var(--purple-bright));
       border-radius: var(--radius-lg);
       padding: 70px 40px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 30px 70px rgba(91,91,214,0.30);
+      box-shadow: 0 30px 70px rgba(108,99,255,0.32);
     }
     .cta-box::before {
       content: "";
@@ -665,7 +700,11 @@
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--gold);
+      background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      width: fit-content;
       margin-bottom: 22px;
     }
     .footer-tagline { color: var(--gold); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; margin-top: 14px; }
@@ -740,6 +779,7 @@
     @media (max-width: 980px) {
       .hero-grid { grid-template-columns: 1fr; gap: 56px; text-align: center; }
       .hero p.sub { margin-left: auto; margin-right: auto; }
+      .hero-tagline { margin-left: auto; margin-right: auto; }
       .hero-actions, .hero-trust { justify-content: center; }
       .hero::before { right: -200px; }
       .feat-grid { grid-template-columns: repeat(2, 1fr); }
@@ -811,9 +851,9 @@
           <a href="#how" class="btn btn-ghost btn-lg">See how it works</a>
         </div>
         <div class="hero-trust reveal d4">
-          <span class="tt"><i data-lucide="camera"></i> Scan in seconds</span>
-          <span class="tt"><i data-lucide="badge-check"></i> Live market values</span>
-          <span class="tt"><i data-lucide="heart"></i> Built for everyone</span>
+          <span class="tt t-violet"><i data-lucide="camera"></i> Scan in seconds</span>
+          <span class="tt t-gold"><i data-lucide="badge-check"></i> Live market values</span>
+          <span class="tt t-bviolet"><i data-lucide="heart"></i> Built for everyone</span>
         </div>
       </div>
 
@@ -857,11 +897,11 @@
           </div>
 
           <div class="float f1">
-            <span class="ic" style="background:linear-gradient(135deg,#5B5BD6,#8A6CF0)"><i data-lucide="scan-line"></i></span>
+            <span class="ic" style="background:linear-gradient(135deg,#6C63FF,#8B7DFF)"><i data-lucide="scan-line"></i></span>
             <div>Card identified<small>in 1.2 seconds</small></div>
           </div>
           <div class="float f2">
-            <span class="ic" style="background:linear-gradient(135deg,#16A34A,#34D399)"><i data-lucide="dollar-sign"></i></span>
+            <span class="ic" style="background:linear-gradient(135deg,#D9A441,#F0C36B)"><i data-lucide="dollar-sign"></i></span>
             <div>Market value<small>from live comps</small></div>
           </div>
         </div>
