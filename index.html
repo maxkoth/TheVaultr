@@ -1091,7 +1091,11 @@
         <p>Join the waitlist for an early invite, launch updates, and the chance to finally understand what your collection is worth.</p>
 
         <form class="waitlist-form" id="waitlistForm" novalidate>
-          <input type="email" id="emailInput" placeholder="Enter your email address" required aria-label="Email address" />
+          <input type="hidden" name="access_key" value="76199e7d-7c48-4e09-a8ab-bed7a722cf9a" />
+          <input type="hidden" name="subject" value="New Vaultr waitlist signup" />
+          <input type="hidden" name="from_name" value="Vaultr Waitlist" />
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+          <input type="email" id="emailInput" name="email" placeholder="Enter your email address" required aria-label="Email address" />
           <button type="submit" class="btn btn-lg">Join the Waitlist <i data-lucide="arrow-right"></i></button>
         </form>
         <div class="form-note" id="formNote">No spam, ever. Just one note when we go live.</div>
@@ -1201,7 +1205,7 @@
     const emailInput = document.getElementById('emailInput');
     const success = document.getElementById('formSuccess');
     const note = document.getElementById('formNote');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const val = emailInput.value.trim();
       const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
@@ -1211,10 +1215,29 @@
         setTimeout(() => { emailInput.style.boxShadow = ''; }, 1600);
         return;
       }
-      form.style.display = 'none';
-      note.style.display = 'none';
-      success.classList.add('show');
-      lucide.createIcons();
+      const btn = form.querySelector('button[type="submit"]');
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = 'Joining…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || 'Submission failed');
+        form.style.display = 'none';
+        note.style.display = 'none';
+        success.classList.add('show');
+        lucide.createIcons();
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = original;
+        lucide.createIcons();
+        note.textContent = 'Something went wrong — please try again.';
+        note.style.color = '#ff9b9b';
+      }
     });
 
     // ---- Scroll reveal ----
