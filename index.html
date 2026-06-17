@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0F1226" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
   <title>Vaultr — Know what your cards are really worth</title>
   <meta name="description" content="Vaultr is the iOS app that scans your sports cards, shows their real market value, and tells you exactly what to do — sell, grade, hold, or bulk. Built for everyone." />
 
@@ -201,13 +205,9 @@
     }
     .logo-mark {
       width: 34px; height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--purple), var(--purple-bright));
       display: grid; place-items: center;
-      box-shadow: 0 6px 16px var(--purple-glow);
     }
-    .logo-mark [data-lucide] { width: 19px; height: 19px; color: #fff; }
-    .logo-mark svg { width: 20px; height: 20px; }
+    .logo-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
     .nav-links {
       display: flex;
@@ -582,6 +582,19 @@
     .who-card h3 { font-size: 17px; margin-bottom: 8px; }
     .who-card p { font-size: 14px; color: var(--muted); }
 
+    /* ---------- Story ---------- */
+    .story-card {
+      max-width: 760px; margin: 0 auto; text-align: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 56px 40px;
+    }
+    .story-card h2 { font-size: clamp(26px, 4vw, 34px); margin: 8px 0 18px; }
+    .story-card > p { font-size: 18px; color: var(--text); max-width: 600px; margin: 0 auto; }
+    .story-sign { margin-top: 22px; font-weight: 700; color: var(--ink); font-size: 15px; }
+    @media (max-width: 760px) { .story-card { padding: 40px 24px; } }
+
     /* ---------- FAQ ---------- */
     .faq { background: var(--bg-soft); }
     .faq-list { max-width: 760px; margin: 0 auto; }
@@ -817,7 +830,7 @@
   <header class="nav" id="nav">
     <div class="container nav-inner">
       <a href="#" class="logo">
-        <span class="logo-mark"><i data-lucide="layers"></i></span>
+        <span class="logo-mark"><img src="/logo-mark.png" alt="Vaultr logo" /></span>
         Vaultr
       </a>
       <nav class="nav-links">
@@ -848,9 +861,9 @@
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="eyebrow reveal"><i data-lucide="sparkles"></i> Launching soon on iOS</span>
-        <h1 class="reveal d1">Know what your cards are <span class="accent">really worth.</span></h1>
+        <h1 class="reveal d1">Found a box of cards? Know what it's <span class="accent">really worth.</span></h1>
         <p class="hero-tagline reveal d2">From collection to capital.</p>
-        <p class="sub reveal d2">Scan a whole pile of cards at once. Vaultr identifies each one, shows its real market value, and tells you exactly what to do with it — sell, grade, hold, or bulk.</p>
+        <p class="sub reveal d2">Scan your whole pile at once — Vaultr identifies every card, shows its real market value, and tells you exactly what to do: sell, grade, hold, or bulk. No card expertise needed.</p>
         <div class="hero-actions reveal d3">
           <a href="#waitlist" class="btn btn-primary btn-lg">Join the Waitlist <i data-lucide="arrow-right"></i></a>
           <a href="#how" class="btn btn-ghost btn-lg">See how it works</a>
@@ -1049,6 +1062,18 @@
     </div>
   </section>
 
+  <!-- ============ STORY ============ -->
+  <section class="section" id="story">
+    <div class="container">
+      <div class="story-card reveal">
+        <span class="eyebrow"><i data-lucide="heart-handshake"></i> Why we built it</span>
+        <h2>Made for the rest of us</h2>
+        <p>We built Vaultr because we've been there — staring at a box of inherited cards with no clue whether we were sitting on a goldmine or a pile of cardboard. Every tool out there is built for experts who already know the hobby. Vaultr is for everyone else: point your phone, get real answers, and know exactly what to do next — no jargon, no guesswork.</p>
+        <p class="story-sign">— The Vaultr Team</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ FAQ ============ -->
   <section class="section faq" id="faq">
     <div class="container">
@@ -1113,7 +1138,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <span class="logo-mark"><i data-lucide="layers"></i></span>
+            <span class="logo-mark"><img src="/logo-mark.png" alt="Vaultr logo" /></span>
             Vaultr
           </a>
           <p class="footer-tagline">From collection to capital.</p>
@@ -1132,7 +1157,7 @@
             <h5>Company</h5>
             <a href="#waitlist">Join the Waitlist</a>
             <a href="#">About</a>
-            <a href="#">Contact</a>
+            <a href="mailto:stacey@thevaultr.com">Contact</a>
           </div>
           <div class="footer-col">
             <h5>Follow along</h5>
@@ -1257,5 +1282,9 @@
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
     }
   </script>
+
+  <!-- Vercel Web Analytics -->
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
