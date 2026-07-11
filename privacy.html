@@ -27,7 +27,7 @@
     .wrap{max-width:760px;margin:0 auto;padding:0 24px}
     header.top{display:flex;align-items:center;justify-content:space-between;height:72px;border-bottom:1px solid var(--line)}
     .logo{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:#fff;letter-spacing:-0.03em}
-    .logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--violet),var(--violet-br))}
+    .logo .mark{width:30px;height:30px;display:block}
     .back{font-size:14px;color:var(--muted)}
     main{padding:48px 0 72px}
     h1{color:var(--ink);font-size:clamp(28px,5vw,36px);font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
@@ -44,7 +44,7 @@
 <body>
   <div class="wrap">
     <header class="top">
-      <a href="/" class="logo"><span class="mark"></span> Vaultr</a>
+      <a href="/" class="logo"><img class="mark" src="/logo-mark.png" alt="" /> Vaultr</a>
       <a href="/" class="back">← Back to site</a>
     </header>
 
